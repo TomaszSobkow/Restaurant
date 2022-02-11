@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace Restaurant.Controllers
 {
@@ -29,14 +27,28 @@ namespace Restaurant.Controllers
         
         }
 
-        [HttpGet]
-        [Route("curretDay")]
-        public IEnumerable<WeatherForecast> Get2()
+        [HttpGet()]
+        [Route("currentDay/{max}")]
+        public IEnumerable<WeatherForecast> Get([FromQuery] int start, [FromRoute] int max)
         {
             var resault = service.Get();
             return resault;
-
         }
+
+        [HttpPost]
+        public string Hello([FromBody]string name) {
+            return $"Hello{name}";
+        }
+
+
+        //1 option to change HttpGet 
+        //[HttpGet("currentDay")]
+        //public IEnumerable<WeatherForecast> Get2()
+        //{
+        //    var resault = service.Get();
+        //    return resault;
+
+        //}
 
 
     }
