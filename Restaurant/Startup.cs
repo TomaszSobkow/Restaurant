@@ -25,7 +25,7 @@ namespace Restaurant
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddTransient<IWheatherForecastService, WheatherForecastService>();
             services.AddControllers();
         }
 
@@ -40,7 +40,6 @@ namespace Restaurant
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
 
             app.UseEndpoints(endpoints =>
             {
