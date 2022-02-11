@@ -36,8 +36,10 @@ namespace Restaurant.Controllers
         }
 
         [HttpPost]
-        public string Hello([FromBody]string name) {
-            return $"Hello{name}";
+        public ActionResult<string> Hello([FromBody]string name) {
+            // HttpContext.Response.StatusCode = 401;
+            // Return $"Hello {name}";
+            return StatusCode(401, $"Hello{name}");
         }
 
 
