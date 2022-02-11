@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace Restaurant.Controllers
 {
@@ -11,29 +9,49 @@ namespace Restaurant.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly IWheatherForecastService service;
+        private readonly ILogger<WeatherForecastController> logger;
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        //Constructor
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IWheatherForecastService service)
         {
-            _logger = logger;
+            this.logger = logger;
+            this.service = service;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            var resault = service.Get();
+            return resault;
+        
         }
+
+        [HttpGet()]
+        [Route("currentDay/{max}")]
+        public IEnumerable<WeatherForecast> Get([FromQuery] int start, [FromRoute] int max)
+        {
+            var resault = service.Get();
+            return resault;
+        }
+
+        [HttpPost]
+        public ActionResult<string> Hello([FromBody]string name) {
+            // HttpContext.Response.StatusCode = 401;
+            // Return $"Hello {name}";
+            return StatusCode(401, $"Hello{name}");
+        }
+
+
+        //1 option to change HttpGet 
+        //[HttpGet("currentDay")]
+        //public IEnumerable<WeatherForecast> Get2()
+        //{
+        //    var resault = service.Get();
+        //    return resault;
+
+        //}
+
+
     }
 }
