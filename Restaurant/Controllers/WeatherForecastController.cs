@@ -19,27 +19,41 @@ namespace Restaurant.Controllers
             this.service = service;
         }
 
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
-        {
-            var resault = service.Get();
-            return resault;
-        
-        }
+        //[HttpGet]
+        //public IEnumerable<WeatherForecast> Get()
+        //{
+        //    var resault = service.Get();
+        //    return resault;
 
-        [HttpGet()]
-        [Route("currentDay/{max}")]
-        public IEnumerable<WeatherForecast> Get([FromQuery] int start, [FromRoute] int max)
-        {
-            var resault = service.Get();
-            return resault;
+        //}
+
+        //[HttpGet()]
+        //[Route("currentDay/{max}")]
+        //public IEnumerable<WeatherForecast> Get([FromQuery] int start, [FromRoute] int max)
+        //{
+        //    var resault = service.Get();
+        //    return resault;
+        //}
+
+        [HttpPost("generate")]
+        public ActionResult<IEnumerable<WeatherForecast>> Generate([FromQuery]int noOfResaults,[FromBody] TemperatureRequest temperature){
+
+            if (noOfResaults <= 0 || temperature.minTemperature > temperature.maxTemperature)
+            {
+                return StatusCode(400);
+            }
+            else {
+                var resault = service.Get(noOfResaults, temperature.minTemperature, temperature.maxTemperature);
+                return Ok(resault);
+            }
         }
 
         [HttpPost]
         public ActionResult<string> Hello([FromBody]string name) {
             // HttpContext.Response.StatusCode = 401;
             // Return $"Hello {name}";
-            return StatusCode(401, $"Hello{name}");
+            //return StatusCode(401, $"Hello{name}");
+            return NotFound($"Hello{ name }");
         }
 
 
