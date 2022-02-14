@@ -36,7 +36,8 @@ namespace Restaurant.Controllers
         //}
 
         [HttpPost("generate")]
-        public ActionResult<IEnumerable<WeatherForecast>> Generate([FromQuery]int noOfResaults,[FromBody] TemperatureRequest temperature){
+        public ActionResult<IEnumerable<WeatherForecast>> Generate([FromQuery]int noOfResaults,
+            [FromBody] TemperatureRequest temperature){
 
             if (noOfResaults <= 0 || temperature.minTemperature > temperature.maxTemperature)
             {
@@ -52,8 +53,8 @@ namespace Restaurant.Controllers
         public ActionResult<string> Hello([FromBody]string name) {
             // HttpContext.Response.StatusCode = 401;
             // Return $"Hello {name}";
-            //return StatusCode(401, $"Hello{name}");
-            return NotFound($"Hello{ name }");
+            return StatusCode(401, $"Hello{name}");
+           // return NotFound($"Hello{ name }");
         }
 
 
