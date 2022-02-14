@@ -1,16 +1,21 @@
-﻿namespace Restaurant.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace Restaurant.Entities
 {
     public class Restaurant
     {
         public int Id { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
-        public string category { get; set; }
-        public bool hasDelivery { get; set; }
-        public string email { get; set; }
-        public string phoneNumber { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Category { get; set; }
+        public bool HasDelivery { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
 
-        public int addressId { get; set; }
+        public int AddressId { get; set; }
+        public virtual Address Address { get; set; }
+        public virtual List<Dish> Dishes { get; set;}
 
     }
 }
