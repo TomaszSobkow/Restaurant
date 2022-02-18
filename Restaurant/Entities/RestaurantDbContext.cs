@@ -9,5 +9,22 @@ namespace Restaurant.Entities
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Dish> Dishes { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+
+            modelBuilder.Entity<Restaurant>()
+                .Property(r => r.Name)
+                .IsRequired()
+                .HasMaxLength(35);
+            
+            modelBuilder.Entity<Dish>()
+                .Property(d => d.Name)
+                .IsRequired();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+            base.OnConfiguring(optionsBuilder);
+        }
+        
+
     }
 }
